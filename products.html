@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Products – EcoBasket</title>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;800&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Nunito', sans-serif;
+      background: #f7f6f2;
+    }
+    header {
+      position: sticky;
+      top: 0;
+      background: white;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 40px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      z-index: 1000;
+    }
+    nav a {
+      margin: 0 15px;
+      text-decoration: none;
+      color: #333;
+    }
+    .filter-bar {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      margin: 30px auto 10px;
+      flex-wrap: wrap;
+    }
+    .filter-bar button {
+      padding: 10px 20px;
+      border: none;
+      background-color: #3a5a40;
+      color: white;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .filter-bar button.active {
+      background-color: #769e6e;
+    }
+    .products-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 30px;
+      padding: 40px;
+    }
+    .product-card {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+    .product-card img {
+      width: 100%;
+      border-radius: 10px;
+      height: 180px;
+      object-fit: cover;
+    }
+    .product-card h3 {
+      margin: 10px 0 5px;
+    }
+    .product-card p {
+      color: #3a5a40;
+      margin: 5px 0;
+    }
+    .product-card button {
+      padding: 8px 16px;
+      background: #3a5a40;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      margin-top: 10px;
+      cursor: pointer;
+    }
+  
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <header>
+    <div style="font-size: 24px; font-weight: 800; color: #3a5a40;">EcoBasket</div>
+    <nav>
+      <a href="home.html">Home</a>
+      <a href="products.html">Products</a>
+            <a href="cart.html">Cart</a>
+      <a href="contact.html">Contact Us</a>
+    </nav>
+  </header>
+
+  <!-- Filters -->
+  <div class="filter-bar">
+    <button class="active" onclick="filterProducts('all')">All</button>
+    <button onclick="filterProducts('Fruits')">Fruits</button>
+    <button onclick="filterProducts('Vegetables')">Vegetables</button>
+    <button onclick="filterProducts('Staples')">Staples</button>
+    <button onclick="filterProducts('Oils')">Oils</button>
+    <button onclick="filterProducts('Spices')">Spices</button>
+  </div>
+
+  <!-- Products -->
+  <div class="products-container" id="productsContainer">
+    <!-- Products injected by JS -->
+  </div>
+
+  <!-- Footer -->
+  <footer style="background: #3a5a40; color: white; padding: 40px 20px;">
+    <div style="max-width: 1000px; margin: auto; display: flex; flex-wrap: wrap; justify-content: space-between;">
+      <div style="flex: 1; min-width: 200px; margin-bottom: 20px;">
+        <h3>EcoBasket</h3>
+        <p>Your trusted source for farm-fresh groceries.</p>
+      </div>
+      <div style="flex: 1; min-width: 200px; margin-bottom: 20px;">
+        <h4>Contact Us</h4>
+        <p>Email: support@ecobasket.com</p>
+        <p>Phone: +91 98765 43210</p>
+      </div>
+      <div style="flex: 1; min-width: 200px; margin-bottom: 20px;">
+        <h4>Follow Us</h4>
+        <p>Instagram | Facebook | Twitter</p>
+      </div>
+    </div>
+    <p style="text-align: center; margin-top: 20px;">© 2025 EcoBasket. All rights reserved.</p>
+  </footer>
+  <!-- Script -->
+  <script>
+    const products = [
+      { id: 1, name: 'Organic Apples', category: 'Fruits', price: 120, image: 'https://media.riverford.co.uk/images/apples-1500x1000-ba8557be0e60890af26591469052161e.jpg' },
+      { id: 2, name: 'Carrots', category: 'Vegetables', price: 60, image: 'https://m.media-amazon.com/images/I/71kDFOqyT8L._AC_UF1000,1000_QL80_.jpg' },
+      { id: 3, name: 'Whole Grains', category: 'Staples', price: 90, image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRjdOVsGHVq_WpFM0m6EGhyXPf7l7Nvc6MwKw&s' },
+      { id: 4, name: 'Cold-Pressed Coconut Oil', category: 'Oils', price: 150, image: 'https://rukminim3.flixcart.com/image/850/1000/xif0q/edible-oil/2/j/o/1500-cold-pressed-copra-oil-dried-coconut-oil-for-cooking-for-original-imahymgzhgw9gfmh.jpeg?q=20&crop=false' },
+      { id: 5, name: 'Organic Turmeric', category: 'Spices', price: 80, image: 'https://brownliving.in/cdn/shop/files/sustainable-high-curcumin-organic-turmeric-powder-100g-glass-jar-by-reviving-roots-at-brownliving-418100.jpg?v=1735294625' },
+      { id: 6, name: 'Tomatoes', category: 'Vegetables', price: 45, image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSaZaGeXy8FJtdMQUM9NiFGcoVPuBcZYJDL_Q&s' },
+      { id: 7, name: 'Organic Grapes', category: 'Fruits', price: 120, image: 'https://m.media-amazon.com/images/I/819jKrvAvdL.jpg' },
+      { id: 8, name: 'Spinach', category: 'Vegetables', price: 60, image: 'https://m.media-amazon.com/images/I/41t9fyIJ6sL._AC_UF1000,1000_QL80_.jpg' },
+      { id: 9, name: 'Rice Grains', category: 'Staples', price: 160, image: 'https://5.imimg.com/data5/SELLER/Default/2022/10/BL/LY/UW/162069702/parboiled-rice-500x500.jpg' },
+      { id: 10, name: 'Organic Cooking Oil', category: 'Oils', price: 150, image : 'https://www.tatanutrikorner.com/cdn/shop/files/B0772J7XGJ.MAIN-removebg-preview.png?v=1748858211' },
+      { id: 11, name: 'Organic Chilli Powder', category: 'Spices', price: 80, image: 'https://www.greendna.in/cdn/shop/products/red_1.png?v=1560887290' },
+      { id: 12, name: 'Organic Oranges', category: 'Fruits', price: 120, image: 'https://feelkaro.s3.ap-south-1.amazonaws.com/uploads/products/rszimages/600x600/fk_81152.jpg' },
+      { id: 13, name: 'Wheat', category: 'Staples', price: 90, image: 'https://5.imimg.com/data5/SELLER/Default/2022/9/HD/TV/TO/160223650/brown-wheat-grain.jpg' },
+      { id: 14, name: 'Organic Sunflower Oil', category: 'Oils', price: 150, image: 'https://houseofveda.com/cdn/shop/files/Sunflower-Oil_0d3d4714-f5ff-4b9f-b006-0145a6e2c455.jpg?v=1713351481' },
+      { id: 15, name: 'Organic Spices', category: 'Spices', price: 80, image: 'https://www.efghfoods.com/wp-content/uploads/2023/01/3.jpg' },
+            
+    ];
+
+    const container = document.getElementById('productsContainer');
+
+    function displayProducts(filter = 'all') {
+      container.innerHTML = '';
+      const filtered = filter === 'all' ? products : products.filter(p => p.category === filter);
+      filtered.forEach(product => {
+        container.innerHTML += `
+          <div class="product-card">
+            <img src="${product.image}" alt="${product.name}">
+            <h3>${product.name}</h3>
+            <p>₹${product.price}</p>
+            <button onclick="addToCart(${product.id})">Add to Cart</button>
+          </div>
+        `;
+      });
+    }
+
+    function filterProducts(category) {
+      document.querySelectorAll('.filter-bar button').forEach(btn => btn.classList.remove('active'));
+      event.target.classList.add('active');
+      displayProducts(category);
+    }
+
+    function addToCart(productId) {
+      let cart = JSON.parse(localStorage.getItem('cart')) || [];
+      const product = products.find(p => p.id === productId);
+      const existing = cart.find(p => p.id === productId);
+      if (existing) {
+        existing.qty += 1;
+      } else {
+        cart.push({ ...product, qty: 1 });
+      }
+      localStorage.setItem('cart', JSON.stringify(cart));
+      alert(`${product.name} added to cart!`);
+    }
+
+    displayProducts();
+  </script>
+</body>
+</html>

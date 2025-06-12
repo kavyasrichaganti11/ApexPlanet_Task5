@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Checkout – EcoBasket</title>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;800&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Nunito', sans-serif;
+      background: #f7f6f2;
+    }
+    header {
+      position: sticky;
+      top: 0;
+      background: white;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 40px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      z-index: 1000;
+    }
+    nav a {
+      margin: 0 15px;
+      text-decoration: none;
+      color: #333;
+    }
+    .container {
+      max-width: 1000px;
+      margin: auto;
+      padding: 30px 20px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 40px;
+    }
+    .checkout-form {
+      flex: 1;
+      min-width: 300px;
+      background: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    .checkout-form h2 {
+      margin-bottom: 20px;
+      color: #3a5a40;
+    }
+    .checkout-form label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: 600;
+    }
+    .checkout-form input, .checkout-form textarea {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    .checkout-form button {
+      background: #3a5a40;
+      color: white;
+      padding: 12px 24px;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .cart-summary {
+      flex: 1;
+      min-width: 300px;
+      background: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    .cart-summary h2 {
+      margin-bottom: 20px;
+      color: #3a5a40;
+    }
+    .cart-item {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+    .cart-total {
+      text-align: right;
+      font-weight: bold;
+      font-size: 18px;
+      margin-top: 20px;
+      color: #3a5a40;
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <header>
+    <div style="font-size: 24px; font-weight: 800; color: #3a5a40;">EcoBasket</div>
+    <nav>
+      <a href="home.html">Home</a>
+      <a href="products.html">Products</a>
+      <a href="cart.html">Cart</a>
+      <a href="contact.html">Contact Us</a>
+    </nav>
+  </header>
+
+  <!-- Checkout Content -->
+  <div class="container">
+    <!-- Form -->
+    <div class="checkout-form">
+      <h2>Delivery Information</h2>
+      <label for="name">Full Name</label>
+      <input type="text" id="name" placeholder="Your Name" required>
+
+      <label for="email">Email</label>
+      <input type="email" id="email" placeholder="you@example.com" required>
+
+      <label for="address">Address</label>
+      <textarea id="address" rows="4" placeholder="Street, City, State, ZIP" required></textarea>
+
+      <label for="phone">Phone Number</label>
+      <input type="tel" id="phone" placeholder="+91-XXXXXXXXXX" required>
+
+      <button onclick="placeOrder()">Place Order</button>
+    </div>
+
+    <!-- Cart Summary -->
+    <div class="cart-summary">
+      <h2>Order Summary</h2>
+      <div id="cartItems"></div>
+      <div class="cart-total" id="cartTotal">Total: ₹0</div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer style="background: #3a5a40; color: white; padding: 40px 20px;">
+    <div style="max-width: 1000px; margin: auto; display: flex; flex-wrap: wrap; justify-content: space-between;">
+      <div style="flex: 1; min-width: 200px; margin-bottom: 20px;">
+        <h3>EcoBasket</h3>
+        <p>Your trusted source for farm-fresh groceries.</p>
+      </div>
+      <div style="flex: 1; min-width: 200px; margin-bottom: 20px;">
+        <h4>Contact Us</h4>
+        <p>Email: support@ecobasket.com</p>
+        <p>Phone: +91 98765 43210</p>
+      </div>
+      <div style="flex: 1; min-width: 200px; margin-bottom: 20px;">
+        <h4>Follow Us</h4>
+        <p>Instagram | Facebook | Twitter</p>
+      </div>
+    </div>
+    <p style="text-align: center; margin-top: 20px;">© 2025 EcoBasket. All rights reserved.</p>
+  </footer>
+
+  <!-- JS -->
+  <script>
+    const cartData = JSON.parse(localStorage.getItem('cart')) || [];
+    const cartItemsDiv = document.getElementById('cartItems');
+    const cartTotalDiv = document.getElementById('cartTotal');
+    let total = 0;
+
+    if (cartData.length === 0) {
+      cartItemsDiv.innerHTML = "<p style='color:gray;'>Your cart is empty.</p>";
+      cartTotalDiv.textContent = "Total: ₹0";
+    } else {
+      cartData.forEach(item => {
+        const itemTotal = item.price * item.qty;
+        total += itemTotal;
+        cartItemsDiv.innerHTML += `
+          <div class="cart-item">
+            <span>${item.name} × ${item.qty}</span>
+            <span>₹${itemTotal}</span>
+          </div>
+        `;
+      });
+      cartTotalDiv.textContent = "Total: ₹" + total;
+    }
+
+    function placeOrder() {
+      alert("✅ Your order has been placed successfully!\n(Functional backend not connected yet.)");
+      localStorage.removeItem('cart');
+      window.location.href = "home.html";
+    }
+  </script>
+</body>
+</html>
